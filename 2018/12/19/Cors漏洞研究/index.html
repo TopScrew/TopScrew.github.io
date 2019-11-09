@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="0x01前言：ccccccc  以前一直认为csrf类漏洞比较鸡肋，而且还是读取类的，所以一直得过且过的没有详细进行研究。最近也是听到这个洞也是被大多数SRC厂商所接受，直接信息够敏感那钱就足够多，所以就来详细了解了解。  0x02Cors的概念CORS是一个W3C标准，全称是”跨域资源共享”（Corss-origin resource sharing）。它允许浏览器向跨源(协议、域名、端口)服务">
+    <meta name="description" content="0x01前言：ccccccc  以前一直认为csrf类漏洞比较鸡肋，而且还是读取类的，所以一直得过且过的没有详细进行研究。最近也是听到这个洞也是被大多数SRC厂商所接受，直接信息够敏感那钱就足够多，所以就来详细了解了解。  #0x02Cors的概念CORS是一个W3C标准，全称是”跨域资源共享”（Corss-origin resource sharing）。它允许浏览器向跨源(协议、域名、端口)服">
 <meta name="keywords" content="跨域,CSRF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cors漏洞研究">
 <meta property="og:url" content="http://yoursite.com/2018/12/19/Cors漏洞研究/index.html">
 <meta property="og:site_name" content="Screw&#39;s blog">
-<meta property="og:description" content="0x01前言：ccccccc  以前一直认为csrf类漏洞比较鸡肋，而且还是读取类的，所以一直得过且过的没有详细进行研究。最近也是听到这个洞也是被大多数SRC厂商所接受，直接信息够敏感那钱就足够多，所以就来详细了解了解。  0x02Cors的概念CORS是一个W3C标准，全称是”跨域资源共享”（Corss-origin resource sharing）。它允许浏览器向跨源(协议、域名、端口)服务">
+<meta property="og:description" content="0x01前言：ccccccc  以前一直认为csrf类漏洞比较鸡肋，而且还是读取类的，所以一直得过且过的没有详细进行研究。最近也是听到这个洞也是被大多数SRC厂商所接受，直接信息够敏感那钱就足够多，所以就来详细了解了解。  #0x02Cors的概念CORS是一个W3C标准，全称是”跨域资源共享”（Corss-origin resource sharing）。它允许浏览器向跨源(协议、域名、端口)服">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/Cors%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/info.png">
 <meta property="og:image" content="http://yoursite.com/images/Cors%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/Nogetinfo.png">
@@ -20,10 +20,10 @@
 <meta property="og:image" content="http://yoursite.com/images/Cors%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/urldecode.jpg">
 <meta property="og:image" content="http://yoursite.com/images/Cors%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/exp1.png">
 <meta property="og:image" content="http://yoursite.com/images/Cors%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/exp2.png">
-<meta property="og:updated_time" content="2019-11-09T09:14:06.883Z">
+<meta property="og:updated_time" content="2019-11-09T09:16:31.433Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cors漏洞研究">
-<meta name="twitter:description" content="0x01前言：ccccccc  以前一直认为csrf类漏洞比较鸡肋，而且还是读取类的，所以一直得过且过的没有详细进行研究。最近也是听到这个洞也是被大多数SRC厂商所接受，直接信息够敏感那钱就足够多，所以就来详细了解了解。  0x02Cors的概念CORS是一个W3C标准，全称是”跨域资源共享”（Corss-origin resource sharing）。它允许浏览器向跨源(协议、域名、端口)服务">
+<meta name="twitter:description" content="0x01前言：ccccccc  以前一直认为csrf类漏洞比较鸡肋，而且还是读取类的，所以一直得过且过的没有详细进行研究。最近也是听到这个洞也是被大多数SRC厂商所接受，直接信息够敏感那钱就足够多，所以就来详细了解了解。  #0x02Cors的概念CORS是一个W3C标准，全称是”跨域资源共享”（Corss-origin resource sharing）。它允许浏览器向跨源(协议、域名、端口)服">
 <meta name="twitter:image" content="http://yoursite.com/images/Cors%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/info.png">
     
     
@@ -108,7 +108,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01前言："><span class="toc-number">1.</span> <span class="toc-text">0x01前言：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0x02Cors的概念"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">0x02Cors的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#0x03Jsonp和Cors的区别"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">0x03Jsonp和Cors的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#遇到的坑点"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">遇到的坑点</span></a></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01前言："><span class="toc-number">1.</span> <span class="toc-text">0x01前言：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02Cors的概念"><span class="toc-number">2.</span> <span class="toc-text">#0x02Cors的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0x03Jsonp和Cors的区别"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">0x03Jsonp和Cors的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#遇到的坑点"><span class="toc-number">2.0.0.2.</span> <span class="toc-text">遇到的坑点</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -161,7 +161,7 @@
 <blockquote>
 <p>以前一直认为csrf类漏洞比较<font color="red">鸡肋</font>，而且还是读取类的，所以一直得过且过的没有详细进行研究。最近也是听到这个洞也是被大多数SRC厂商所接受，直接信息够敏感那钱就足够多，所以就来详细了解了解。</p>
 </blockquote>
-<h4 id="0x02Cors的概念"><a href="#0x02Cors的概念" class="headerlink" title="0x02Cors的概念"></a>0x02Cors的概念</h4><p>CORS是一个W3C标准，全称是”跨域资源共享”（Corss-origin resource sharing）。它允许浏览器向跨源(协议、域名、端口)服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。<br>CORS需要浏览器和服务器同时支持。它的通信过程，都是浏览器自动完成，不需要用户参与。对于开发者来说，CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。因此，实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。</p>
+<h1 id="0x02Cors的概念"><a href="#0x02Cors的概念" class="headerlink" title="#0x02Cors的概念"></a>#0x02Cors的概念</h1><p>CORS是一个W3C标准，全称是”跨域资源共享”（Corss-origin resource sharing）。它允许浏览器向跨源(协议、域名、端口)服务器，发出XMLHttpRequest请求，从而克服了AJAX只能同源使用的限制。<br>CORS需要浏览器和服务器同时支持。它的通信过程，都是浏览器自动完成，不需要用户参与。对于开发者来说，CORS通信与同源的AJAX通信没有差别，代码完全一样。浏览器一旦发现AJAX请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。因此，实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。</p>
 <h4 id="0x03Jsonp和Cors的区别"><a href="#0x03Jsonp和Cors的区别" class="headerlink" title="0x03Jsonp和Cors的区别"></a>0x03Jsonp和Cors的区别</h4><table>
 <thead>
 <tr>
@@ -284,7 +284,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01前言："><span class="toc-number">1.</span> <span class="toc-text">0x01前言：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0x02Cors的概念"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">0x02Cors的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#0x03Jsonp和Cors的区别"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">0x03Jsonp和Cors的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#遇到的坑点"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">遇到的坑点</span></a></li></ol></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01前言："><span class="toc-number">1.</span> <span class="toc-text">0x01前言：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02Cors的概念"><span class="toc-number">2.</span> <span class="toc-text">#0x02Cors的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0x03Jsonp和Cors的区别"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">0x03Jsonp和Cors的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#遇到的坑点"><span class="toc-number">2.0.0.2.</span> <span class="toc-text">遇到的坑点</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
