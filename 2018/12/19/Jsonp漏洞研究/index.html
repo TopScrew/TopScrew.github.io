@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head><meta name="generator" content="Hexo 3.9.0">
     <!-- so meta -->
     <meta charset="utf-8">
@@ -10,20 +10,20 @@
 <meta name="keywords" content="跨域,CSRF,XSS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jsonp漏洞研究">
-<meta property="og:url" content="http://yoursite.com/2018/12/19/Jsonp漏洞研究/index.html">
+<meta property="og:url" content="http://screwsec.com/2018/12/19/Jsonp漏洞研究/index.html">
 <meta property="og:site_name" content="Screw&#39;s blog">
 <meta property="og:description" content="前言 前面了解了一下  概念1.众所周知，Ajax请求资源受同域的限制，不管是静态资源，动态页面，web服务都不行 2.同时我们发现web页面上调用JS文件时则不受跨域的影响（不仅如此，我们还发现凡是拥有‘src’这个属性的标签都拥有跨域的能力，比如&amp;lt;script&amp;gt;、&amp;lt;img&amp;gt;、&amp;lt;iframe&amp;gt;等 Ajax的核心是通过XmlHttpRequest获取非本页内容，">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/xss.png">
-<meta property="og:image" content="http://yoursite.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/xss2.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/xss3.jpg">
-<meta property="og:image" content="http://yoursite.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/jsonp.jpg">
-<meta property="og:image" content="http://yoursite.com/Users/screw/Documents/blog/source/images/Cors%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/urldecode.jpg">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://screwsec.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/xss.png">
+<meta property="og:image" content="http://screwsec.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/xss2.jpg">
+<meta property="og:image" content="http://screwsec.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/xss3.jpg">
+<meta property="og:image" content="http://screwsec.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/jsonp.jpg">
+<meta property="og:image" content="http://screwsec.com/Users/screw/Documents/blog/source/images/Cors%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/urldecode.jpg">
 <meta property="og:updated_time" content="2019-11-09T09:46:11.530Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jsonp漏洞研究">
 <meta name="twitter:description" content="前言 前面了解了一下  概念1.众所周知，Ajax请求资源受同域的限制，不管是静态资源，动态页面，web服务都不行 2.同时我们发现web页面上调用JS文件时则不受跨域的影响（不仅如此，我们还发现凡是拥有‘src’这个属性的标签都拥有跨域的能力，比如&amp;lt;script&amp;gt;、&amp;lt;img&amp;gt;、&amp;lt;iframe&amp;gt;等 Ajax的核心是通过XmlHttpRequest获取非本页内容，">
-<meta name="twitter:image" content="http://yoursite.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/xss.png">
+<meta name="twitter:image" content="http://screwsec.com/images/Jsonp%E6%BC%8F%E6%B4%9E%E7%A0%94%E7%A9%B6/xss.png">
     
     
         
@@ -55,7 +55,7 @@
     
 </head>
 
-<body class="max-width mx-auto px3 ltr">
+<body class="max-width mx-auto px3 LTR">
     
       <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
@@ -65,19 +65,19 @@
     <span id="nav">
       <ul>
          
-          <li><a href="/">Home</a></li>
+          <li><a href="/">主页</a></li>
          
-          <li><a href="/about/">About</a></li>
+          <li><a href="/archives/">历史归档</a></li>
          
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/projects_url">Projects</a></li>
+          <li><a href="/about/">关于</a></li>
         
       </ul>
     </span>
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" href="/2019/11/10/JavaAgent简述/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2018/12/19/Cors漏洞研究/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -93,16 +93,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2018/12/19/Jsonp漏洞研究/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&text=Jsonp漏洞研究"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&is_video=false&description=Jsonp漏洞研究"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Jsonp漏洞研究&body=Check out this article: http://yoursite.com/2018/12/19/Jsonp漏洞研究/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&name=Jsonp漏洞研究&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://screwsec.com/2018/12/19/Jsonp漏洞研究/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&text=Jsonp漏洞研究"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&is_video=false&description=Jsonp漏洞研究"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Jsonp漏洞研究&body=Check out this article: http://screwsec.com/2018/12/19/Jsonp漏洞研究/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&name=Jsonp漏洞研究&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -198,13 +198,11 @@
     <div id="nav-footer" style="display: none">
       <ul>
          
-          <li><a href="/">Home</a></li>
+          <li><a href="/">主页</a></li>
          
-          <li><a href="/about/">About</a></li>
+          <li><a href="/archives/">历史归档</a></li>
          
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/projects_url">Projects</a></li>
+          <li><a href="/about/">关于</a></li>
         
       </ul>
     </div>
@@ -215,16 +213,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2018/12/19/Jsonp漏洞研究/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&text=Jsonp漏洞研究"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&is_video=false&description=Jsonp漏洞研究"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Jsonp漏洞研究&body=Check out this article: http://yoursite.com/2018/12/19/Jsonp漏洞研究/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2018/12/19/Jsonp漏洞研究/&name=Jsonp漏洞研究&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://screwsec.com/2018/12/19/Jsonp漏洞研究/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&text=Jsonp漏洞研究"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&is_video=false&description=Jsonp漏洞研究"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Jsonp漏洞研究&body=Check out this article: http://screwsec.com/2018/12/19/Jsonp漏洞研究/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&title=Jsonp漏洞研究"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://screwsec.com/2018/12/19/Jsonp漏洞研究/&name=Jsonp漏洞研究&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -242,19 +240,17 @@
         
         <footer id="footer">
   <div class="footer-left">
-    Copyright &copy; 2019 Screw1
+    Copyright &copy; 2019 Screw
   </div>
   <div class="footer-right">
     <nav>
       <ul>
          
-          <li><a href="/">Home</a></li>
+          <li><a href="/">主页</a></li>
          
-          <li><a href="/about/">About</a></li>
+          <li><a href="/archives/">历史归档</a></li>
          
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a href="/projects_url">Projects</a></li>
+          <li><a href="/about/">关于</a></li>
         
       </ul>
     </nav>
