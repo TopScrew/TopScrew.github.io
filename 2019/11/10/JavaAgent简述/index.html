@@ -6,13 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="javaAgent的两种方式12345678910/** * 以vm参数的形式载入，在程序main方法执行之前执行 * 其jar包的manifest需要配置属性Premain-Class */public static void premain(String agentArgs, Instrumentation inst);/** * 以Attach的方式载入，在Java程序启动后执行 * 其ja">
+    <meta name="description" content="javaAgent的两种方式12345678910/** * 以vm参数的形式载入，在程序main方法执行之前执行. * 其jar包的manifest需要配置属性Premain-Class */public static void premain(String agentArgs, Instrumentation inst);/** * 以Attach的方式载入，在Java程序启动后执行 * 其j">
 <meta name="keywords" content="java,Agent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaAgent简述">
 <meta property="og:url" content="http://screwsec.com/2019/11/10/JavaAgent简述/index.html">
 <meta property="og:site_name" content="Screw&#39;s blog">
-<meta property="og:description" content="javaAgent的两种方式12345678910/** * 以vm参数的形式载入，在程序main方法执行之前执行 * 其jar包的manifest需要配置属性Premain-Class */public static void premain(String agentArgs, Instrumentation inst);/** * 以Attach的方式载入，在Java程序启动后执行 * 其ja">
+<meta property="og:description" content="javaAgent的两种方式12345678910/** * 以vm参数的形式载入，在程序main方法执行之前执行. * 其jar包的manifest需要配置属性Premain-Class */public static void premain(String agentArgs, Instrumentation inst);/** * 以Attach的方式载入，在Java程序启动后执行 * 其j">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/Onload_App.png">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/OnloadTest.png">
@@ -20,10 +20,10 @@
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/TestAnget.png">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/testShow.png">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/end.png">
-<meta property="og:updated_time" content="2019-11-10T09:49:23.354Z">
+<meta property="og:updated_time" content="2019-11-13T15:06:14.349Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaAgent简述">
-<meta name="twitter:description" content="javaAgent的两种方式12345678910/** * 以vm参数的形式载入，在程序main方法执行之前执行 * 其jar包的manifest需要配置属性Premain-Class */public static void premain(String agentArgs, Instrumentation inst);/** * 以Attach的方式载入，在Java程序启动后执行 * 其ja">
+<meta name="twitter:description" content="javaAgent的两种方式12345678910/** * 以vm参数的形式载入，在程序main方法执行之前执行. * 其jar包的manifest需要配置属性Premain-Class */public static void premain(String agentArgs, Instrumentation inst);/** * 以Attach的方式载入，在Java程序启动后执行 * 其j">
 <meta name="twitter:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/Onload_App.png">
     
     
@@ -155,7 +155,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="javaAgent的两种方式"><a href="#javaAgent的两种方式" class="headerlink" title="javaAgent的两种方式"></a>javaAgent的两种方式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以vm参数的形式载入，在程序main方法执行之前执行</span></span><br><span class="line"><span class="comment"> * 其jar包的manifest需要配置属性Premain-Class</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以Attach的方式载入，在Java程序启动后执行</span></span><br><span class="line"><span class="comment"> * 其jar包的manifest需要配置属性Agent-Class</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">agentmain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br></pre></td></tr></table></figure>
+    <h2 id="javaAgent的两种方式"><a href="#javaAgent的两种方式" class="headerlink" title="javaAgent的两种方式"></a>javaAgent的两种方式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以vm参数的形式载入，在程序main方法执行之前执行.</span></span><br><span class="line"><span class="comment"> * 其jar包的manifest需要配置属性Premain-Class</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以Attach的方式载入，在Java程序启动后执行</span></span><br><span class="line"><span class="comment"> * 其jar包的manifest需要配置属性Agent-Class</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">agentmain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>下面会分别用这两种方式来使用ASM框架写演示Demo</p>
 <h2 id="Onload方式"><a href="#Onload方式" class="headerlink" title="Onload方式"></a>Onload方式</h2><p>Agent.java<br>premain方法优先级很高，除了少量的系统类外，会先加载premain方法。在premain方法中加入一个转换类AgentTransform</p>
