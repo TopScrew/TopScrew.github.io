@@ -36,7 +36,8 @@
 <meta property="og:image" content="http://screwsec.com/images/OpenRasp%E5%88%86%E6%9E%90/V8check2.png">
 <meta property="og:image" content="http://screwsec.com/images/OpenRasp%E5%88%86%E6%9E%90/V8check3.png">
 <meta property="og:image" content="http://screwsec.com/images/OpenRasp%E5%88%86%E6%9E%90/V8check4.png">
-<meta property="og:updated_time" content="2019-11-16T11:09:26.877Z">
+<meta property="og:image" content="http://screwsec.com/images/OpenRasp%E5%88%86%E6%9E%90/%E7%AE%97%E6%B3%95.png">
+<meta property="og:updated_time" content="2019-11-16T11:30:14.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenRasp分析">
 <meta name="twitter:description" content="入口文件： 入口类 进行初始化操作 加载至Bootstrap优先于其它系统类启动类加载器，为什么要将rasp.jar加载至BootstrapBootstrap是Java类加载层次中最顶层的类加载器，负责加载JDK中的核心类库，如：rt.jar、resources.jar、charsets.jar等，将rasp.jar加载到Bootstrap可以用来Hook 来自于BootstrapClassLoa">
@@ -93,6 +94,8 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" href="/2019/11/16/浅析IAST/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="/2019/11/10/JavaAgent简述/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -179,7 +182,8 @@
 <h2 id="3-构建ModuleLoader加载rasp-engine-jar"><a href="#3-构建ModuleLoader加载rasp-engine-jar" class="headerlink" title="3.构建ModuleLoader加载rasp-engine.jar"></a>3.构建ModuleLoader加载rasp-engine.jar</h2><p><img src="/images/OpenRasp%E5%88%86%E6%9E%90/engine.png" alt="测试前"></p>
 <h2 id="引擎启动类"><a href="#引擎启动类" class="headerlink" title="引擎启动类"></a>引擎启动类</h2><h3 id="加载V8引擎"><a href="#加载V8引擎" class="headerlink" title="加载V8引擎"></a>加载V8引擎</h3><h3 id="初始化插件系统"><a href="#初始化插件系统" class="headerlink" title="初始化插件系统"></a>初始化插件系统</h3><h3 id="初始化Hook节点的管理类"><a href="#初始化Hook节点的管理类" class="headerlink" title="初始化Hook节点的管理类"></a>初始化Hook节点的管理类</h3><h3 id="初始化Transformer类"><a href="#初始化Transformer类" class="headerlink" title="初始化Transformer类"></a>初始化Transformer类</h3><p><img src="/images/OpenRasp%E5%88%86%E6%9E%90/%E5%BC%95%E6%93%8E%E5%90%AF%E5%8A%A8%E7%B1%BB.png" alt="测试前"><br>JS.Initialize() 插件初始化<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/JS%E5%88%9D%E5%A7%8B%E5%8C%96.png" alt="测试前"><br>会将/plugins目录下的脚本进行读取，并进行插件更新<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/UpdatePlugin.png" alt="测试前"><br>InitFileWatcher<br>会创建以目录为单位的文件监听，如果文件进行增删改，就执行插件更新<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/%E6%96%87%E4%BB%B6%E7%9B%91%E6%8E%A7.png" alt="测试前"><br>CheckerManager  初始化Hook节点的管理类<br>将 name和Checker加入枚举MAP中,供后面的检查使用<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/HookType.png" alt="测试前"><br>会在com.baidu.openrasp.hook包下查找带@HookAnnotation的类<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/HookAnnotation.png" alt="测试前"><br>并将他们加入咱们前面所说的Hooks里<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/HookEntity.png" alt="测试前"><br>初始化Transformer类<br>对类进行转换<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/%E5%88%9D%E5%A7%8B%E5%8C%96Transformer.png" alt="测试前"><br>构造方法会添加一个Transformer类<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/AddTransformer.png" alt="测试前"><br>如果Hooks里的类和calssName相同，那就对类进行转化。<br>hook.transformClass(ctClass)会对类的方法进行Hook并进行修改<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/Transformer%E6%96%B9%E6%B3%95.png" alt="测试前"><br>HookMethod会在setURL之前添加checkHttpUri方法<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/hookMethod.png" alt="测试前"><br>进而对URL是否非法进行判断<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/checkUrl.png" alt="测试前"><br>将提取的url详细参数提取存入params带入HookHandler.doCheck(CheckParameter.Type.SSRF, params);方法进行检测<br>当cpu超过90%禁用所有hook节点，因为安全是业务的附属品，如果业务挂了，安全搞得再好也没有意义<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/doRealCheck.png" alt="测试前"><br>启用V8对进行检测<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/V8check1.png" alt="测试前"><br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/V8check2.png" alt="测试前"></p>
 <h2 id="会用JNI的当时去检查"><a href="#会用JNI的当时去检查" class="headerlink" title="会用JNI的当时去检查"></a>会用JNI的当时去检查</h2><p>type.getName(),   插件的名称<br>params.getByteArray(),<br>params.size(),<br>new Context(checkParameter.getRequest()),  上下文<br>type == Type.REQUEST,<br>(int) Config.getConfig().getPluginTimeout()<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/V8check3.png" alt="测试前"></p>
-<p>修改规则的话，不用重启服务器<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/V8check4.png" alt="测试前"></p>
+<p>修改规则的话，不用重启服务器<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/V8check4.png" alt="测试前"><br>/plugins/official/plugin.js  会根据自定义的规则和算法进行检测<br><img src="/images/OpenRasp%E5%88%86%E6%9E%90/%E7%AE%97%E6%B3%95.png" alt="测试前"></p>
+<p>如果：<br>block  阻断<br>ignore  风险日志记录</p>
 
   </div>
 </article>
