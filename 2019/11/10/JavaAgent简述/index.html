@@ -6,25 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="javaAgent的两种方式12345678910/** * 以vm参数的形式载入，在程序main方法执行之前执行. * 其jar包的manifest需要配置属性Premain-Class */public static void premain(String agentArgs, Instrumentation inst);/** * 以Attach的方式载入，在Java程序启动后执行 * 其j">
+    <meta name="description" content="instrument的作用   利用Instrumentation，我们可以开发一个Agent程序。用来替换修改某些类的定义来增强代码逻辑。 instrument的两种方式  instrument 支持Agent_OnLoad和Agent_OnAttach两种方法，一种是在启动的时候加载，另一种是在运行时期加载。 Agent_OnLoad的加载过程： 创建并初始化JPLISAgent 监听VMIn">
 <meta name="keywords" content="java,Agent">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaAgent简述">
+<meta property="og:title" content="instrument简述">
 <meta property="og:url" content="http://screwsec.com/2019/11/10/JavaAgent简述/index.html">
 <meta property="og:site_name" content="Screw&#39;s blog">
-<meta property="og:description" content="javaAgent的两种方式12345678910/** * 以vm参数的形式载入，在程序main方法执行之前执行. * 其jar包的manifest需要配置属性Premain-Class */public static void premain(String agentArgs, Instrumentation inst);/** * 以Attach的方式载入，在Java程序启动后执行 * 其j">
+<meta property="og:description" content="instrument的作用   利用Instrumentation，我们可以开发一个Agent程序。用来替换修改某些类的定义来增强代码逻辑。 instrument的两种方式  instrument 支持Agent_OnLoad和Agent_OnAttach两种方法，一种是在启动的时候加载，另一种是在运行时期加载。 Agent_OnLoad的加载过程： 创建并初始化JPLISAgent 监听VMIn">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/Instrmentation.png">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/Onload_App.png">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/OnloadTest.png">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/%E6%B5%8B%E8%AF%95%E5%89%8D.png">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/TestAnget.png">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/testShow.png">
 <meta property="og:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/end.png">
-<meta property="og:updated_time" content="2019-11-13T15:06:14.349Z">
+<meta property="og:updated_time" content="2019-11-18T14:44:45.002Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JavaAgent简述">
-<meta name="twitter:description" content="javaAgent的两种方式12345678910/** * 以vm参数的形式载入，在程序main方法执行之前执行. * 其jar包的manifest需要配置属性Premain-Class */public static void premain(String agentArgs, Instrumentation inst);/** * 以Attach的方式载入，在Java程序启动后执行 * 其j">
-<meta name="twitter:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/Onload_App.png">
+<meta name="twitter:title" content="instrument简述">
+<meta name="twitter:description" content="instrument的作用   利用Instrumentation，我们可以开发一个Agent程序。用来替换修改某些类的定义来增强代码逻辑。 instrument的两种方式  instrument 支持Agent_OnLoad和Agent_OnAttach两种方法，一种是在启动的时候加载，另一种是在运行时期加载。 Agent_OnLoad的加载过程： 创建并初始化JPLISAgent 监听VMIn">
+<meta name="twitter:image" content="http://screwsec.com/images/JavaAgent%E7%AE%80%E8%BF%B0/Instrmentation.png">
     
     
         
@@ -44,7 +45,7 @@
         
     
     <!-- title -->
-    <title>JavaAgent简述</title>
+    <title>instrument简述</title>
     <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
     <!-- persian styles -->
@@ -95,20 +96,20 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://screwsec.com/2019/11/10/JavaAgent简述/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://screwsec.com/2019/11/10/JavaAgent简述/&text=JavaAgent简述"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://screwsec.com/2019/11/10/JavaAgent简述/&is_video=false&description=JavaAgent简述"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=JavaAgent简述&body=Check out this article: http://screwsec.com/2019/11/10/JavaAgent简述/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://screwsec.com/2019/11/10/JavaAgent简述/&name=JavaAgent简述&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://screwsec.com/2019/11/10/JavaAgent简述/&text=instrument简述"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://screwsec.com/2019/11/10/JavaAgent简述/&is_video=false&description=instrument简述"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=instrument简述&body=Check out this article: http://screwsec.com/2019/11/10/JavaAgent简述/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://screwsec.com/2019/11/10/JavaAgent简述/&name=instrument简述&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javaAgent的两种方式"><span class="toc-number">1.</span> <span class="toc-text">javaAgent的两种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Onload方式"><span class="toc-number">2.</span> <span class="toc-text">Onload方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OnAttach方式"><span class="toc-number">3.</span> <span class="toc-text">OnAttach方式</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#instrument的作用"><span class="toc-number">1.</span> <span class="toc-text">instrument的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#instrument的两种方式"><span class="toc-number">2.</span> <span class="toc-text">instrument的两种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-OnLoad的加载过程："><span class="toc-number">3.</span> <span class="toc-text">Agent_OnLoad的加载过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-OnAttach的加载过程："><span class="toc-number">4.</span> <span class="toc-text">Agent_OnAttach的加载过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Instrumentation的局限性"><span class="toc-number">5.</span> <span class="toc-text">Instrumentation的局限性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Onload方式"><span class="toc-number">6.</span> <span class="toc-text">Onload方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OnAttach方式"><span class="toc-number">7.</span> <span class="toc-text">OnAttach方式</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -120,7 +121,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        JavaAgent简述
+        instrument简述
     </h1>
 
 
@@ -157,7 +158,38 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="javaAgent的两种方式"><a href="#javaAgent的两种方式" class="headerlink" title="javaAgent的两种方式"></a>javaAgent的两种方式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以vm参数的形式载入，在程序main方法执行之前执行.</span></span><br><span class="line"><span class="comment"> * 其jar包的manifest需要配置属性Premain-Class</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以Attach的方式载入，在Java程序启动后执行</span></span><br><span class="line"><span class="comment"> * 其jar包的manifest需要配置属性Agent-Class</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">agentmain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br></pre></td></tr></table></figure>
+    <h2 id="instrument的作用"><a href="#instrument的作用" class="headerlink" title="instrument的作用"></a>instrument的作用</h2><p>   利用Instrumentation，我们可以开发一个Agent程序。用来替换修改某些类的定义来增强代码逻辑。</p>
+<h2 id="instrument的两种方式"><a href="#instrument的两种方式" class="headerlink" title="instrument的两种方式"></a>instrument的两种方式</h2><p>  instrument 支持Agent_OnLoad和Agent_OnAttach两种方法，一种是在启动的时候加载，另一种是在运行时期加载。</p>
+<h2 id="Agent-OnLoad的加载过程："><a href="#Agent-OnLoad的加载过程：" class="headerlink" title="Agent_OnLoad的加载过程："></a>Agent_OnLoad的加载过程：</h2><ul>
+<li>创建并初始化JPLISAgent</li>
+<li>监听VMInit事件，在vm初始化完成之后做下面的事情：<ul>
+<li>创建InstrumentationImpl对象</li>
+<li>监听ClassFileLoadHook事件</li>
+<li>调用InstrumentationImpl的loadClassAndCallPremain方法，在这个方法里会去调用javaagent里MANIFEST.MF里指定的Premain-Class类的premain方法</li>
+</ul>
+</li>
+<li>解析javaagent里MANIFEST.MF里的参数，并根据这些参数来设置JPLISAgent里的一些内容</li>
+</ul>
+<h2 id="Agent-OnAttach的加载过程："><a href="#Agent-OnAttach的加载过程：" class="headerlink" title="Agent_OnAttach的加载过程："></a>Agent_OnAttach的加载过程：</h2><ul>
+<li>创建并初始化JPLISAgent</li>
+<li>解析javaagent里MANIFEST.MF里的参数</li>
+<li>创建InstrumentationImpl对象</li>
+<li>监听ClassFileLoadHook事件</li>
+<li>调用InstrumentationImpl的loadClassAndCallAgentmain方法，在这个方法里会去调用javaagent里MANIFEST.MF里指定的Agent-Class类的agentmain方法</li>
+</ul>
+<p><img src="/images/JavaAgent%E7%AE%80%E8%BF%B0/Instrmentation.png" alt="测试前"></p>
+<ul>
+<li>addTransformer/ removeTransformer：注册/删除ClassFileTransformer</li>
+<li>retransformClasses：对于已经加载的类重新进行转换处理，即会触发重新加载类定义，需要注意的是，新加载的类不能修改旧有的类声明，譬如不能增加属性、不能修改方法声明</li>
+<li>redefineClasses：与如上类似，但不是重新进行转换处理，而是直接把处理结果(bytecode)直接给JVM</li>
+<li>getAllLoadedClasses：获得当前已经加载的Class，可配合retransformClasses使用</li>
+<li>getInitiatedClasses：获得由某个特定的ClassLoader加载的类定义</li>
+<li>getObjectSize：获得一个对象占用的空间，包括其引用的对象</li>
+<li>appendToBootstrapClassLoaderSearch/appendToSystemClassLoaderSearch：增加BootstrapClassLoader/SystemClassLoader的搜索路径</li>
+<li>isNativeMethodPrefixSupported/setNativeMethodPrefix：支持拦截Native Method</li>
+</ul>
+<h2 id="Instrumentation的局限性"><a href="#Instrumentation的局限性" class="headerlink" title="Instrumentation的局限性"></a>Instrumentation的局限性</h2><p>大多数情况下，我们使用Instrumentation都是使用其字节码插桩的功能，或者笼统说就是类重定义(Class Redefine)的功能，但是有以下的局限性：<br>premain和agentmain两种方式修改字节码的时机都是类文件加载之后，也就是说必须要带有Class类型的参数，不能通过字节码文件和自定义的类名重新定义一个本来不存在的类。<br>类的字节码修改称为类转换(Class Transform)，类转换其实最终都回归到类重定义Instrumentation#redefineClasses()方法，此方法有以下限制：<br>新类和老类的父类必须相同。<br>新类和老类实现的接口数也要相同，并且是相同的接口。<br>新类和老类访问符必须一致。<br>新类和老类字段数和字段名要一致。<br>新类和老类新增或删除的方法必须是private static/final修饰的。<br>可以修改方法体。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以vm参数的形式载入，在程序main方法执行之前执行.</span></span><br><span class="line"><span class="comment"> * 其jar包的manifest需要配置属性Premain-Class</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">premain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以Attach的方式载入，在Java程序启动后执行</span></span><br><span class="line"><span class="comment"> * 其jar包的manifest需要配置属性Agent-Class</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">agentmain</span><span class="params">(String agentArgs, Instrumentation inst)</span></span>;</span><br></pre></td></tr></table></figure>
 
 <p>下面会分别用这两种方式来使用ASM框架写演示Demo</p>
 <h2 id="Onload方式"><a href="#Onload方式" class="headerlink" title="Onload方式"></a>Onload方式</h2><p>Agent.java<br>premain方法优先级很高，除了少量的系统类外，会先加载premain方法。在premain方法中加入一个转换类AgentTransform</p>
@@ -210,21 +242,21 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javaAgent的两种方式"><span class="toc-number">1.</span> <span class="toc-text">javaAgent的两种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Onload方式"><span class="toc-number">2.</span> <span class="toc-text">Onload方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OnAttach方式"><span class="toc-number">3.</span> <span class="toc-text">OnAttach方式</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#instrument的作用"><span class="toc-number">1.</span> <span class="toc-text">instrument的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#instrument的两种方式"><span class="toc-number">2.</span> <span class="toc-text">instrument的两种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-OnLoad的加载过程："><span class="toc-number">3.</span> <span class="toc-text">Agent_OnLoad的加载过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-OnAttach的加载过程："><span class="toc-number">4.</span> <span class="toc-text">Agent_OnAttach的加载过程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Instrumentation的局限性"><span class="toc-number">5.</span> <span class="toc-text">Instrumentation的局限性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Onload方式"><span class="toc-number">6.</span> <span class="toc-text">Onload方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OnAttach方式"><span class="toc-number">7.</span> <span class="toc-text">OnAttach方式</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://screwsec.com/2019/11/10/JavaAgent简述/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=http://screwsec.com/2019/11/10/JavaAgent简述/&text=JavaAgent简述"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://screwsec.com/2019/11/10/JavaAgent简述/&is_video=false&description=JavaAgent简述"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=JavaAgent简述&body=Check out this article: http://screwsec.com/2019/11/10/JavaAgent简述/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=JavaAgent简述"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://screwsec.com/2019/11/10/JavaAgent简述/&name=JavaAgent简述&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://screwsec.com/2019/11/10/JavaAgent简述/&text=instrument简述"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://screwsec.com/2019/11/10/JavaAgent简述/&is_video=false&description=instrument简述"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=instrument简述&body=Check out this article: http://screwsec.com/2019/11/10/JavaAgent简述/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://screwsec.com/2019/11/10/JavaAgent简述/&title=instrument简述"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://screwsec.com/2019/11/10/JavaAgent简述/&name=instrument简述&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
